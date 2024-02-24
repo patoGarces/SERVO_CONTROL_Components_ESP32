@@ -63,7 +63,7 @@ void pwmServoInit(void){
     ledc_timer_config_t timerConfig = {
         .speed_mode = SPEED_MODE_TIMER,
         .timer_num = TIMER_HIGH_FREQ_OUTPUT,
-        .clk_cfg = LEDC_USE_REF_TICK,
+        .clk_cfg = LEDC_APB_CLK,
         .duty_resolution = LEDC_TIMER_10_BIT,
         .freq_hz = TIMER_HIGH_FREQUENCY,
     };
