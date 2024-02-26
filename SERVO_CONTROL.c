@@ -38,32 +38,12 @@ uint8_t limitsPwm[6][2] = {
     {MIN_SERVO_DUTY,MAX_SERVO_DUTY},
 };
 
-void pwmServoInit(void){
-
-    /* seteo pines de salida de steps */
-    gpio_config_t channelsOutput={
-        .intr_type = GPIO_INTR_DISABLE,
-        .mode = GPIO_MODE_OUTPUT,
-        .pin_bit_mask = ( 1 << GPIO_CHANNEL_1),
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .pull_up_en = GPIO_PULLUP_DISABLE
-    };
-    gpio_config(&channelsOutput);
-    channelsOutput.pin_bit_mask = (1 << GPIO_CHANNEL_2);
-    gpio_config(&channelsOutput);
-    channelsOutput.pin_bit_mask = (1 << GPIO_CHANNEL_3);
-    gpio_config(&channelsOutput);
-    channelsOutput.pin_bit_mask = (1 << GPIO_CHANNEL_4);
-    gpio_config(&channelsOutput);
-    channelsOutput.pin_bit_mask = (1 << GPIO_CHANNEL_5);
-    gpio_config(&channelsOutput);
-    channelsOutput.pin_bit_mask = (1 << GPIO_CHANNEL_6);
-    gpio_config(&channelsOutput);
+void pwmServoInit(uint8_t _hsPwm1Gpio,uint8_t _hsPwm2Gpio,uint8_t _lsPwm1Gpio,uint8_t _lsPwm2Gpio,uint8_t _lsPwm3Gpio,uint8_t _lsPwm4Gpio) {
 
     ledc_timer_config_t timerConfig = {
         .speed_mode = SPEED_MODE_TIMER,
         .timer_num = TIMER_HIGH_FREQ_OUTPUT,
-        .clk_cfg = LEDC_APB_CLK,
+        .clk_cfg = LEDC_USE_RC_FAST_CLK,
         .duty_resolution = LEDC_TIMER_10_BIT,
         .freq_hz = TIMER_HIGH_FREQUENCY,
     };
@@ -74,7 +54,7 @@ void pwmServoInit(void){
     ledc_timer_config(&timerConfig);
 
     ledc_channel_config_t channelConfig = {
-        .gpio_num = GPIO_CHANNEL_1,
+        .gpio_num = _hsPwm1Gpio,
         .speed_mode = SPEED_MODE_TIMER,
         .channel = LEDC_CHANNEL_0,
         .intr_type =  LEDC_INTR_DISABLE,
@@ -84,25 +64,25 @@ void pwmServoInit(void){
     };
     ledc_channel_config(&channelConfig);
 
-    channelConfig.gpio_num = GPIO_CHANNEL_2;
+    channelConfig.gpio_num = _hsPwm2Gpio;
     channelConfig.channel = LEDC_CHANNEL_1;
     ledc_channel_config(&channelConfig);   
 
     channelConfig.timer_sel = TIMER_LOW_FREQ_OUTPUT;
 
-    channelConfig.gpio_num = GPIO_CHANNEL_3;
+    channelConfig.gpio_num = _lsPwm1Gpio;
     channelConfig.channel = LEDC_CHANNEL_2;
     ledc_channel_config(&channelConfig);   
 
-    channelConfig.gpio_num = GPIO_CHANNEL_4;
+    channelConfig.gpio_num = _lsPwm2Gpio;
     channelConfig.channel = LEDC_CHANNEL_3;
     ledc_channel_config(&channelConfig);
 
-    channelConfig.gpio_num = GPIO_CHANNEL_5;
+    channelConfig.gpio_num = _lsPwm3Gpio;
     channelConfig.channel = LEDC_CHANNEL_4;
     ledc_channel_config(&channelConfig);  
 
-    channelConfig.gpio_num = GPIO_CHANNEL_6;
+    channelConfig.gpio_num = _lsPwm4Gpio;
     channelConfig.channel = LEDC_CHANNEL_5;
     ledc_channel_config(&channelConfig);      
 
@@ -123,8 +103,4 @@ void setChannelOutput(uint8_t channel,int8_t speed){
 void changeLimitsPwm(uint8_t channel,uint8_t minPwm,uint8_t maxPwm){
     limitsPwm[channel][MIN_LIMIT_PWM_INDEX] = minPwm;
     limitsPwm[channel][MAX_LIMIT_PWM_INDEX] = maxPwm;
-}
-
-void safetyMotors(){
-
 }
