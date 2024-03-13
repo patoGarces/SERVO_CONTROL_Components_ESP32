@@ -91,7 +91,7 @@ void pwmServoInit(uint8_t _hsPwm1Gpio,uint8_t _hsPwm2Gpio,uint8_t _lsPwm1Gpio,ui
 }
 
 
-void setChannelOutput(uint8_t channel,int8_t speed){
+void pwmSetOutput(uint8_t channel,int8_t speed){
     if( speed >= 0 && speed <= 100 ){
         float duty = limitsPwm[channel][MIN_LIMIT_PWM_INDEX] + ((float) speed * (limitsPwm[channel][MAX_LIMIT_PWM_INDEX]-limitsPwm[channel][MIN_LIMIT_PWM_INDEX])) / 100.00;  
         duty = (duty*1024) / 100.00 ; 
@@ -100,7 +100,7 @@ void setChannelOutput(uint8_t channel,int8_t speed){
     }
 }
 
-void changeLimitsPwm(uint8_t channel,uint8_t minPwm,uint8_t maxPwm){
+void pwmChangeLimits(uint8_t channel,uint8_t minPwm,uint8_t maxPwm){
     limitsPwm[channel][MIN_LIMIT_PWM_INDEX] = minPwm;
     limitsPwm[channel][MAX_LIMIT_PWM_INDEX] = maxPwm;
 }
