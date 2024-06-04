@@ -38,7 +38,7 @@ uint8_t limitsPwm[6][2] = {
     {MIN_SERVO_DUTY,MAX_SERVO_DUTY},
 };
 
-void pwmServoInit(uint8_t _hsPwm1Gpio,uint8_t _hsPwm2Gpio,uint8_t _lsPwm1Gpio,uint8_t _lsPwm2Gpio,uint8_t _lsPwm3Gpio,uint8_t _lsPwm4Gpio) {
+void pwmServoInit(pwm_servo_init_t config) {
 
     ledc_timer_config_t timerConfig = {
         .speed_mode = SPEED_MODE_TIMER,
@@ -54,7 +54,7 @@ void pwmServoInit(uint8_t _hsPwm1Gpio,uint8_t _hsPwm2Gpio,uint8_t _lsPwm1Gpio,ui
     ledc_timer_config(&timerConfig);
 
     ledc_channel_config_t channelConfig = {
-        .gpio_num = _hsPwm1Gpio,
+        .gpio_num = config.hsPwm1Gpio,
         .speed_mode = SPEED_MODE_TIMER,
         .channel = LEDC_CHANNEL_0,
         .intr_type =  LEDC_INTR_DISABLE,
@@ -64,25 +64,25 @@ void pwmServoInit(uint8_t _hsPwm1Gpio,uint8_t _hsPwm2Gpio,uint8_t _lsPwm1Gpio,ui
     };
     ledc_channel_config(&channelConfig);
 
-    channelConfig.gpio_num = _hsPwm2Gpio;
+    channelConfig.gpio_num = config.hsPwm2Gpio;
     channelConfig.channel = LEDC_CHANNEL_1;
     ledc_channel_config(&channelConfig);   
 
     channelConfig.timer_sel = TIMER_LOW_FREQ_OUTPUT;
 
-    channelConfig.gpio_num = _lsPwm1Gpio;
+    channelConfig.gpio_num = config.lsPwm1Gpio;
     channelConfig.channel = LEDC_CHANNEL_2;
     ledc_channel_config(&channelConfig);   
 
-    channelConfig.gpio_num = _lsPwm2Gpio;
+    channelConfig.gpio_num = config.lsPwm2Gpio;
     channelConfig.channel = LEDC_CHANNEL_3;
     ledc_channel_config(&channelConfig);
 
-    channelConfig.gpio_num = _lsPwm3Gpio;
+    channelConfig.gpio_num = config.lsPwm3Gpio;
     channelConfig.channel = LEDC_CHANNEL_4;
     ledc_channel_config(&channelConfig);  
 
-    channelConfig.gpio_num = _lsPwm4Gpio;
+    channelConfig.gpio_num = config.lsPwm4Gpio;
     channelConfig.channel = LEDC_CHANNEL_5;
     ledc_channel_config(&channelConfig);      
 

@@ -3,7 +3,16 @@
 
 #include "stdio.h"
 
-void pwmServoInit(uint8_t _hsPwm1Gpio,uint8_t _hsPwm2Gpio,uint8_t _lsPwm1Gpio,uint8_t _lsPwm2Gpio,uint8_t _lsPwm3Gpio,uint8_t _lsPwm4Gpio);
+typedef struct {
+    uint8_t hsPwm1Gpio;
+    uint8_t hsPwm2Gpio;
+    uint8_t lsPwm1Gpio;
+    uint8_t lsPwm2Gpio;
+    uint8_t lsPwm3Gpio;
+    uint8_t lsPwm4Gpio;
+} pwm_servo_init_t;
+
+void pwmServoInit(pwm_servo_init_t config);
 void pwmSetOutput(uint8_t channel,int8_t speed);
 void pwmChangeLimits(uint8_t channel,uint8_t minPwm,uint8_t maxPwm);
 
