@@ -13,7 +13,7 @@ typedef struct {
 } pwm_servo_init_t;
 
 void pwmServoInit(pwm_servo_init_t config);
-void pwmSetOutput(uint8_t channel,int8_t speed);
+void pwmSetOutput(uint8_t channel,uint16_t speed);
 void pwmChangeLimits(uint8_t channel,uint8_t minPwm,uint8_t maxPwm);
 
 #endif
