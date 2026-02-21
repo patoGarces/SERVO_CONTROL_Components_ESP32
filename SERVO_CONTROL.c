@@ -90,7 +90,6 @@ void pwmServoInit(pwm_servo_init_t config) {
     ledc_timer_resume(SPEED_MODE_TIMER,TIMER_LOW_FREQ_OUTPUT);
 }
 
-
 void pwmSetOutput(uint8_t channel,uint16_t speed){
     if (speed <= 1000) {
         float duty = limitsPwm[channel][MIN_LIMIT_PWM_INDEX] + ((float) speed * (limitsPwm[channel][MAX_LIMIT_PWM_INDEX]-limitsPwm[channel][MIN_LIMIT_PWM_INDEX])) / 1000.00;  
